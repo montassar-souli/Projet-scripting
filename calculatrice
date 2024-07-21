@@ -1,0 +1,31 @@
+#!/bin/bash
+
+PS3="Votre choix :"
+select item in "- Calcul somme" "- Calcul multiplication" "- Calcul soustraction" "- Calcul division" "- Exit"
+do
+read -p "Donner le premier entier :" A
+read -p "Donner le deusiéme entier :" B
+echo "Vous avez choisi " $item
+case $REPLY in
+1)
+	echo `expr $A + $B`
+	;;
+2)
+	echo `expr $A \* $B`
+	;;
+3)
+	echo `èxpr $A - $B`
+	;;
+4)
+	echo `expr $A / $B`
+	;;
+5)
+	echo "Fin du script"
+	exit 0
+	;;
+*)	
+	echo "Choix incorrect"
+	;;
+esac
+done
+

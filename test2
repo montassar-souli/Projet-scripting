@@ -1,0 +1,16 @@
+#!/bin/bash
+
+item="$1"
+
+for i in "$1"/*; do
+name=$(basename "$i")
+        if [ -d "$i" ]; then
+        
+            echo "$name is a directory"
+        elif [ -f "$i" ]; then
+            echo "$name is a file"
+        else
+            echo "$name is neither a file nor a directory"
+        fi
+done
+

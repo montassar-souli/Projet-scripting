@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Function to count the number of files in a directory
+AfficheNbF() {
+    find "$1" -type f | wc -l
+}
+
+# Function to count the number of directories in a directory
+AfficheNbD() {
+    find "$1" -type d | wc -l
+}
+
+# Function to generate and display statistics using gnuplot
+stat() {
+dir="$1"
+nb_files=$(ls -l $1 | grep ^- | wc -l)
+nb_dirs=$(ls -l $1 | grep ^d | wc -l)
+
+    echo "Nombre de fichiers : $nb_files"
+    echo "Nombre de dossiers : $nb_dirs"
+
+    # Create the gnuplot script with data directly from variables
+    gnuplot -persist <<-EOFMarker
+        set title "Statistiques de $dir"
+        set style data histograms
+        set style fill solid 1.0 border -1
+        set xlabel "Types"
+        set ylabel "Nombre"
+        set yrange [0:*]
+        plot '-' using 2:xtic(1) title "" 
+        "Fichier" $nb_files
+        "Dossier" $nb_dirs
+        e
+EOFMarker
+}
+
+# Check if the directory argument is provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 chemin_du_repertoire"
+    exit 1
+fi
+
+# Call the stat function with the provided directory
+stat "$1"
+
