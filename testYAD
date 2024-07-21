@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Define options for the menu
+options=(
+	"Afficher le nombre de fichiers"
+	"Afficher le nombre de dossiers"
+	"Afficher les types de fichiers"
+	"Afficher les noms des fichiers et les droits d’accès"
+	"Afficher les noms des fichiers et les propriétaires"
+	"Afficher les statistiques"
+	"Aide"
+	"Fermer"
+)
+# Display menu using YAD
+chosen_option=$(yad --title="Menu" \
+                   --width=300 \
+                   --height=200 \
+                   --button="OK:0" \
+                   --list \
+                   --column="Options" "${options[@]}")
+                
+
+# Check which option was chosen
+case $? in
+    0) echo "Chosen option: $chosen_option";;
+    252) echo "Dialog closed without selection.";;
+    *) echo "An error occurred.";;
+esac
+

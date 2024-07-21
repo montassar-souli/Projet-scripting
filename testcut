@@ -1,3 +1,35 @@
 #!/bin/bash
 
+awkFuncBasique(){
+	ls -l $1 | awk '{print $9, $1}'
+}
+
+awkFuncModifier(){
+		ls -l $1 | grep -v '^total' | awk '{print $9, $1}'
+}
+cutFunc(){
+	ls -l $1 | cut -d ' ' -f9,1
+}
+
+PS3="Votre choix :"
+select choix in "awkFuncBasique" "awkFuncModifier" "cutFunc" "Fermer";
+	do
+		case $REPLY in
+			1)
+				awkFuncBasique $1
+				;;
+			2)
+				awkFuncModifier $1
+				;;
+			3)
+				cutFunc $1
+				;;
+			4)
+				exit 0
+				;;
+			*)
+				echo "Choix inccorect"
+				;;		
+		esac
+	done 
 
